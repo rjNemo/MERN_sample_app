@@ -21,4 +21,22 @@ export default class Firebase {
     app.initializeApp(CONFIG);
     this.auth = app.auth();
   }
+
+  provider = new app.auth.GoogleAuthProvider();
+  signInWithGoogle = () =>
+    this.auth
+      .signInWithPopup(this.provider)
+      .then((res) => console.log(res.user));
+
+  createUserWithEmailAndPassword = (email, password) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
+
+  signinWithEmailAndPassword = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
+
+  signOut = () => this.auth.signOut();
+
+  resetPassword = (email) => this.auth.sendPasswordResetEmail(email);
+
+  updatePassword = (password) => this.auth.currentUser.updatePassword(password);
 }

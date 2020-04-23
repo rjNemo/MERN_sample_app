@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-
 import MainNavbar from "../MainNavbar";
 import MainRouter from "../Router";
 
