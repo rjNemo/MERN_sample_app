@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { Button, ListGroup, ListGroupItem } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { selectItems, deleteItem, getItemsAsync } from "../../store/itemSlice";
+import {
+  selectItems,
+  deleteItemAsync,
+  getItemsAsync,
+} from "../../store/itemSlice";
 
 const useStyles = () => ({
   removeBtn: {
@@ -21,17 +25,17 @@ export default function List() {
   // Precising dependencies so it doesn't render infinitely.
   useEffect(() => {
     dispatch(getItemsAsync());
-  }, [dispatch, getItemsAsync]);
+  }, [dispatch]);
 
   return (
     <ListGroup>
-      {items.map(({ id, name }) => (
-        <ListGroupItem key={id}>
+      {items.map(({ _id, name }) => (
+        <ListGroupItem key={_id}>
           <Button
             style={styles.removeBtn}
             color="danger"
             size="small"
-            onClick={() => dispatch(deleteItem(id))}
+            onClick={() => dispatch(deleteItemAsync(_id))}
           >
             &times;
           </Button>

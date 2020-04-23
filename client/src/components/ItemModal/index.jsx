@@ -4,13 +4,12 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Form,
   FormGroup,
   Label,
   Input,
 } from "reactstrap";
-import { addItem } from "../../store/itemSlice";
+import { addItemAsync } from "../../store/itemSlice";
 import { useDispatch } from "react-redux";
 
 const useStyles = () => ({
@@ -28,7 +27,7 @@ export default function ItemModal() {
   const toggle = () => setModal(!modal);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addItem(name));
+    dispatch(addItemAsync(name));
     toggle();
   };
   const handleChange = (e) => setName(e.target.value);
