@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import path from "path";
 import moment from "moment";
 import helmet from "helmet";
-// import { MONGO_URI } from "./config/keys.js";
+import { MONGO_URI } from "./config/keys.js";
 import items from "./routes/api/items.js";
 
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 // http port
 const PORT = process.env.PORT || 5000;
 // database connection key
-const db = process.env.MONGO_URI; // || MONGO_URI;
+const db = process.env.MONGO_URI || MONGO_URI;
 
 // connection to database
 mongoose
