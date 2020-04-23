@@ -11,7 +11,7 @@ const app = express();
 // http port
 const PORT = process.env.PORT || 5000;
 // database connection key
-const db = process.env.MONGO_URI;
+const db = process.env.MONGO_URI; // || MONGO_URI;
 
 // connection to database
 mongoose
@@ -27,7 +27,6 @@ app.use(express.json());
 app.use("/api/items/", items);
 
 // Serve static assets in Production
-
 if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
