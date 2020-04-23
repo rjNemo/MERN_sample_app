@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import * as ROUTES from "../../constants/routes";
 import { useFirebase } from "../../services/auth";
@@ -18,6 +18,9 @@ const useStyles = () => ({
   },
 });
 
+/**
+ * Page's layout
+ */
 export default function SignUpPage() {
   const styles = useStyles();
   return (
@@ -28,7 +31,10 @@ export default function SignUpPage() {
   );
 }
 
-export const SignUpForm = () => {
+/**
+ * Holds the form state and validates the form.
+ */
+const SignUpFormBase = (props) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
@@ -37,9 +43,23 @@ export const SignUpForm = () => {
 
   const auth = useFirebase();
 
+  const cleanFields = () => {
+    setUserName("");
+    setEmail("");
+    setPassword1("");
+    setPassword2("");
+    setError(null);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth.signInWithGoogle().then((res) => console.log(res.user));
+    auth
+      .createUserWithEmailAndPassword(email, password1)
+      .then(() => {
+        cleanFields();
+        props.history.push(ROUTES.APP);
+      })
+      .catch((err) => setError(err));
   };
 
   const isInvalid =
@@ -98,6 +118,11 @@ const InputField = ({ id, label, set, type = "text" }) => {
     </div>
   );
 };
+
+/**
+ * Sign Up form final component. withRouter allows redirections.
+ */
+export const SignUpForm = withRouter(SignUpFormBase);
 
 export const SignUpLink = () => (
   <p>
