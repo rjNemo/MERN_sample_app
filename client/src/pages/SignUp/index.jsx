@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
+import { Button, Form, FormGroup, Container } from "reactstrap";
 import * as ROUTES from "../../constants/routes";
 import { useFirebase } from "../../services/auth";
+import InputField from "../../components/InputField";
 
 const useStyles = () => ({
   root: {
     paddingTop: "1rem",
-    paddingBottom: "1rem",
-  },
-  inputField: {
     paddingBottom: "1rem",
   },
   button: {
@@ -118,18 +116,6 @@ const SignUpFormBase = (props) => {
         {error && <p>{error.message}</p>}
       </FormGroup>
     </Form>
-  );
-};
-
-const InputField = ({ id, label, set, type = "text" }) => {
-  const handleChange = (e) => set(e.target.value);
-
-  const styles = useStyles();
-  return (
-    <div style={styles.inputField}>
-      <Label for={id}>{label}</Label>
-      <Input type={type} id={id} onChange={handleChange} />
-    </div>
   );
 };
 

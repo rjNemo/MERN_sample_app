@@ -27,7 +27,7 @@ export default function MainNavbar() {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink>
-                <Link href={ROUTES.SIGN_IN}>Sign In</Link>
+                <Link to={ROUTES.SIGN_IN}>Sign In</Link>
               </NavLink>
             </NavItem>
             <NavItem>
