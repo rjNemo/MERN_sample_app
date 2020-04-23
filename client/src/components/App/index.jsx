@@ -1,18 +1,15 @@
 import React from "react";
-import { Container } from "reactstrap";
-import ItemModal from "../ItemModal";
-import List from "../List";
-import MainNavbar from "../Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
+
+import MainNavbar from "../MainNavbar";
+import MainRouter from "../Router";
 
 function App() {
   return (
-    <>
+    <Router>
       <MainNavbar />
-      <Container>
-        <ItemModal />
-        <List />
-      </Container>
-    </>
+      <MainRouter />
+    </Router>
   );
 }
 

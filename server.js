@@ -5,6 +5,7 @@ import moment from "moment";
 import helmet from "helmet";
 import items from "./routes/api/items.js";
 import users from "./routes/api/users.js";
+import * as ROUTES from "./constants/routes.js";
 import authenticationChecker from "./middlewares/auth/index.js";
 
 const app = express();
@@ -27,8 +28,8 @@ app.use(authenticationChecker);
 // bodyparser middleware
 app.use(express.json());
 // Register routes
-app.use("/api/items/", items);
-app.use("/api/users/", users);
+app.use(ROUTES.ITEMS, items);
+app.use(ROUTES.USERS, users);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {

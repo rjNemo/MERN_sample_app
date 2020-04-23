@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -9,6 +10,7 @@ import {
   NavLink,
   Container,
 } from "reactstrap";
+import * as ROUTES from "../../constants/routes";
 
 export default function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +30,31 @@ export default function MainNavbar() {
                 rel="noopener noreferrer"
               >
                 GitHub
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link href={ROUTES.SIGN_IN}>Sign In</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link to={ROUTES.LANDING}>Landing</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link to={ROUTES.APP}>Home</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link to={ROUTES.ACCOUNT}>Account</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <Link to={ROUTES.ADMIN}>Admin</Link>
               </NavLink>
             </NavItem>
           </Nav>
