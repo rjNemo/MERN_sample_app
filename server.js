@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import path from "path";
 import moment from "moment";
 import helmet from "helmet";
-import { MONGO_URI } from "./config/keys.js";
+// import { MONGO_URI } from "./config/keys.js";
 import items from "./routes/api/items.js";
 
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 // http port
 const PORT = process.env.PORT || 5000;
 // database connection key
-const db = process.env.MONGO_URI || MONGO_URI;
+const db = process.env.MONGO_URI; // || MONGO_URI;
 
 // connection to database
 mongoose
@@ -26,8 +26,8 @@ app.use(express.json());
 // Register routes
 app.use("/api/items/", items);
 
-// Serve static assets in Production
-if (process.env.NODE_ENV === "PRODUCTION") {
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
