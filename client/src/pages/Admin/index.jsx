@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
-import ItemModal from "../ItemModal";
-import List from "../List";
+import ItemModal from "../../components/ItemModal";
+import List from "../../components/List";
 
 export default function AdminPage() {
   return (

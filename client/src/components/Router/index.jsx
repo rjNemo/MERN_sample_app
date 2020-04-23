@@ -1,15 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
-import {
-  LandingPage,
-  SignUpPage,
-  SignInPage,
-  PasswordForgetPage,
-  AppPage,
-  AccountPage,
-  AdminPage,
-} from "../../pages/index";
+import AppPage from "../../pages/App";
+import LandingPage from "../../pages/Landing";
+import SignUpPage from "../../pages/SignUp";
+import SignInPage from "../../pages/SignIn";
+import PasswordForgetPage from "../../pages/PasswordForget";
+import AccountPage from "../../pages/Account";
+import AdminPage from "../../pages/Admin";
 
 export default function MainRouter() {
   return (
