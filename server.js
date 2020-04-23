@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 import moment from "moment";
+import helmet from "helmet";
 import { MONGO_URI } from "./config/keys.js";
 import items from "./routes/api/items.js";
 
@@ -18,6 +19,8 @@ mongoose
   .then(() => console.log(`${moment().format()}: MongoDB connected`))
   .catch((e) => console.error(e));
 
+// some security
+app.use(helmet());
 // bodyparser middleware
 app.use(express.json());
 // Register routes
