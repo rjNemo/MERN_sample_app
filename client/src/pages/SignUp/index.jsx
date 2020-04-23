@@ -32,7 +32,7 @@ export default function SignUpPage() {
 }
 
 /**
- * Holds the form state and validates the form.
+ * Holds the form state and validates the form. TODO: use an alert to display errors.
  */
 const SignUpFormBase = (props) => {
   const [userName, setUserName] = useState("");
@@ -55,6 +55,17 @@ const SignUpFormBase = (props) => {
     e.preventDefault();
     auth
       .createUserWithEmailAndPassword(email, password1)
+      .then(() => {
+        cleanFields();
+        props.history.push(ROUTES.APP);
+      })
+      .catch((err) => setError(err));
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    auth
+      .signInWithGoogle()
       .then(() => {
         cleanFields();
         props.history.push(ROUTES.APP);
@@ -100,6 +111,9 @@ const SignUpFormBase = (props) => {
           type="submit"
         >
           Sign Up
+        </Button>
+        <Button color="light" style={styles.button} block onClick={handleClick}>
+          Sign Up with Google
         </Button>
         {error && <p>{error.message}</p>}
       </FormGroup>
