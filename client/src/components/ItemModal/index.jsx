@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Modal,
@@ -10,7 +11,6 @@ import {
   Input,
 } from "reactstrap";
 import { addItemAsync } from "../../store/itemSlice";
-import { useDispatch } from "react-redux";
 
 const useStyles = () => ({
   button: {
@@ -46,7 +46,7 @@ export default function ItemModal() {
               <Label for="item">Add an Item</Label>
               <Input
                 type="text"
-                name="name"
+                // name="name"
                 id="item"
                 onChange={handleChange}
               />

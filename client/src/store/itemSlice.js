@@ -18,10 +18,8 @@ export const itemSlice = createSlice({
       ...state,
       items: [action.payload, ...state.items],
     }),
-    deleteItem: (state, action) => ({
-      ...state,
-      items: state.items.filter((i) => i._id !== action.payload),
-    }),
+    deleteItem: (state, action) =>
+      state.items.filter((i) => i._id !== action.payload),
     setItemsLoading: (state) => ({ ...state, loading: true }),
   },
 });

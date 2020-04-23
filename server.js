@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
 import moment from "moment";
 import { MONGO_URI } from "./config/keys.js";
 import items from "./routes/api/items.js";
@@ -21,6 +22,15 @@ mongoose
 app.use(express.json());
 // Register routes
 app.use("/api/items/", items);
+
+// Serve static assets in Production
+
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 // Starts server
 app.listen(PORT, () =>
