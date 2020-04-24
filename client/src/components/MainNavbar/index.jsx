@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
   Collapse,
@@ -13,10 +14,19 @@ import {
 } from "reactstrap";
 import SignOutButton from "../SignOutButton";
 import * as ROUTES from "../../constants/routes";
+import { selectLoggedIn, getAuthUserAsync } from "../../store/sessionSlice";
 
-const MainNavbar = ({ authUser }) => {
+//{ authUser }
+const MainNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+
+  const authUser = useSelector(selectLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAuthUserAsync());
+  }, [dispatch]);
 
   return (
     <Navbar color="dark" dark expand="sm">

@@ -1,4 +1,4 @@
-import app from "firebase/app";
+import * as firebase from "firebase/app";
 // import "firebase/firestore";
 import "firebase/auth";
 import config from "./config.json";
@@ -18,11 +18,11 @@ const CONFIG = {
 // Firebase services as auth and firestore.
 export default class Firebase {
   constructor() {
-    app.initializeApp(CONFIG);
-    this.auth = app.auth();
+    // firebase.initializeApp(CONFIG);
+    this.auth = firebase.auth();
   }
 
-  provider = new app.auth.GoogleAuthProvider();
+  provider = new firebase.auth.GoogleAuthProvider();
 
   signInWithGoogle = () =>
     this.auth
@@ -40,4 +40,13 @@ export default class Firebase {
   resetPassword = (email) => this.auth.sendPasswordResetEmail(email);
 
   updatePassword = (password) => this.auth.currentUser.updatePassword(password);
+
+  // getAuthState = async () =>
+  //   this.auth.onAuthStateChanged((authUser) =>
+  //     authUser ? setAuthUser(authUser) : setAuthUser(null)
+  //   );
 }
+
+firebase.initializeApp(CONFIG);
+
+export { firebase };
