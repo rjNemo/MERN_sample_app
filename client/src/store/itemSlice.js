@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ITEMS_URL } from "./urls";
+import * as URL from "../constants/urls";
 
 export const itemSlice = createSlice({
   name: "item",
@@ -31,7 +31,7 @@ export const itemSlice = createSlice({
  */
 export const getItemsAsync = () => async (dispatch) => {
   dispatch(setItemsLoading);
-  const { data } = await axios.get(ITEMS_URL);
+  const { data } = await axios.get(URL.ITEMS);
   dispatch(getItems(data));
 };
 
@@ -39,7 +39,7 @@ export const getItemsAsync = () => async (dispatch) => {
  * Creates a new Item in the db.
  */
 export const addItemAsync = (name) => async (dispatch) => {
-  const { data } = await axios.post(ITEMS_URL, { name });
+  const { data } = await axios.post(URL.ITEMS, { name });
   dispatch(addItem(data));
 };
 
@@ -47,7 +47,7 @@ export const addItemAsync = (name) => async (dispatch) => {
  * Deletes Item _id from the db.
  */
 export const deleteItemAsync = (id) => async (dispatch) => {
-  await axios.delete(`${ITEMS_URL}/${id}`);
+  await axios.delete(`${URL.ITEMS}/${id}`);
   dispatch(deleteItem(id));
 };
 
