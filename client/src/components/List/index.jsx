@@ -29,6 +29,29 @@ export default function List() {
       if (user) {
         const token = await firebase.auth.currentUser.getIdToken();
         dispatch(getItemsAsync(token));
+
+        // push to authslice ...
+        //import axios from "axios";
+        // import * as URL from "../../constants/urls";
+        // const u = await firebase.auth.currentUser;
+        // console.log(u);
+        // await axios.post(
+        //   URL.USERS,
+        //   {
+        //     username: u.displayName,
+        //     email: u.email,
+        //     roles: {
+        //       ADMIN: true,
+        //     },
+        //     photoUrl: u.photoURL,
+        //     phoneNumber: u.phoneNumber,
+        //   },
+        //   {
+        //     headers: {
+        //       authorization: `Bearer ${token}`,
+        //     },
+        //   }
+        // );
       }
     });
   }, [dispatch, firebase.auth]);
