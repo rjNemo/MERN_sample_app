@@ -11,16 +11,19 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const firebase = useFirebase();
-
+  let render;
   useEffect(() => {
     firebase.auth.onAuthStateChanged((authUser) => {
       if (!condition(authUser)) {
         history.push(ROUTES.SIGN_IN);
+      } else {
+        render = condition(authUser)
+          ? (props) => <Component {...props} />
+          : null;
       }
     });
   }, [firebase.auth, condition, history]);
 
-  const render = (props) => <Component {...props} />;
   return <Route path={path} render={render} {...rest} />;
 };
 
