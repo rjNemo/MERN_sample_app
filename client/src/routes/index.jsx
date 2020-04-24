@@ -30,7 +30,7 @@ export default function MainRouter() {
       />
       <PrivateRoute
         path={ROUTES.ADMIN}
-        condition={CONDITIONS.AUTHENTICATED}
+        condition={CONDITIONS.ADMIN}
         component={AdminPage}
       />
     </Switch>
