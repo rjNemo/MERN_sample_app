@@ -3,11 +3,20 @@ import { Container } from "reactstrap";
 import ItemModal from "../../components/ItemModal";
 import List from "../../components/List";
 
-export default function AppPage() {
+const useStyles = () => ({
+  root: {
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
+  },
+});
+
+const AppPage = () => {
+  const styles = useStyles();
   return (
-    <Container>
+    <Container style={styles.root}>
       <ItemModal />
       <List />
     </Container>
   );
-}
+};
+export default AppPage;
