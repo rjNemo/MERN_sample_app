@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Collapse,
   Container,
@@ -13,7 +14,7 @@ import {
 import SignOutButton from "../SignOutButton";
 import * as ROUTES from "../../constants/routes";
 
-export default function MainNavbar() {
+const MainNavbar = ({ authUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -21,26 +22,18 @@ export default function MainNavbar() {
     <Navbar color="dark" dark expand="sm">
       <Container>
         <NavbarBrand>
-          <Link to={ROUTES.LANDING}>LandingPage</Link>
+          <Link to={authUser ? ROUTES.APP : ROUTES.LANDING}>App</Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink>
-                <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink>
-                <Link to={ROUTES.APP}>Home</Link>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink>
-                <Link to={ROUTES.ACCOUNT}>Account</Link>
-              </NavLink>
-            </NavItem>
+            {authUser && (
+              <NavItem>
+                <NavLink>
+                  <Link to={ROUTES.ACCOUNT}>Account</Link>
+                </NavLink>
+              </NavItem>
+            )}
             <NavItem>
               <NavLink>
                 <Link to={ROUTES.ADMIN}>Admin</Link>
@@ -57,7 +50,11 @@ export default function MainNavbar() {
             </NavItem>
             <NavItem>
               <NavLink>
-                <SignOutButton />
+                {authUser ? (
+                  <SignOutButton />
+                ) : (
+                  <Link to={ROUTES.SIGN_IN}>Sign In</Link>
+                )}
               </NavLink>
             </NavItem>
           </Nav>
@@ -65,4 +62,10 @@ export default function MainNavbar() {
       </Container>
     </Navbar>
   );
-}
+};
+
+MainNavbar.propTypes = {
+  authUser: PropTypes.any.isRequired,
+};
+
+export default MainNavbar;
