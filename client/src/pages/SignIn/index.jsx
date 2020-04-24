@@ -5,13 +5,11 @@ import { useFirebase } from "../../services/auth";
 import { SignUpLink } from "../SignUp";
 import InputField from "../../components/InputField";
 import * as ROUTES from "../../constants/routes";
+import { PasswordForgetLink } from "../PasswordForget";
 
 const useStyles = () => ({
   root: {
     paddingTop: "1rem",
-    paddingBottom: "1rem",
-  },
-  inputField: {
     paddingBottom: "1rem",
   },
   button: {
@@ -29,6 +27,7 @@ export default function SignInPage() {
     <Container style={styles.root}>
       <h1>Sign In</h1>
       <SignInForm />
+      <PasswordForgetLink />
       <SignUpLink />
     </Container>
   );
