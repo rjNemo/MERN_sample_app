@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import PasswordChangeForm from "../../components/PasswordChangeForm";
 import PasswordForgetForm from "../../components/PasswordForgetForm";
+import { useFirebase } from "../../services/auth";
 
 const styles = {
   root: {
@@ -11,6 +12,8 @@ const styles = {
 };
 
 const AccountPage = () => {
+  const auth = useFirebase();
+
   return (
     <Container style={styles.root}>
       <h1>Account</h1>
