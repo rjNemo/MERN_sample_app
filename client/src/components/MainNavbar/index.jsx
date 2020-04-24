@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
+  Container,
   Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
   NavItem,
   NavLink,
-  Container,
 } from "reactstrap";
+import SignOutButton from "../SignOutButton";
 import * as ROUTES from "../../constants/routes";
 
 export default function MainNavbar() {
@@ -52,6 +53,11 @@ export default function MainNavbar() {
                 rel="noopener noreferrer"
               >
                 GitHub
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink>
+                <SignOutButton />
               </NavLink>
             </NavItem>
           </Nav>
