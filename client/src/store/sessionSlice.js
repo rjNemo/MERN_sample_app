@@ -57,6 +57,7 @@ export const getAuthUserAsync = () => async (dispatch) => {
 
 export const { getAuthUser, getToken, logIn, logOut } = sessionSlice.actions;
 
+// selectors
 export const selectAuthUser = (state) => state.session;
 export const selectLoggedIn = (state) => state.session.loggedIn;
 

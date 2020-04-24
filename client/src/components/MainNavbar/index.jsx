@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import {
   Collapse,
   Container,
@@ -12,16 +11,16 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { selectLoggedIn, getAuthUserAsync } from "../../store/sessionSlice";
 import SignOutButton from "../SignOutButton";
 import * as ROUTES from "../../constants/routes";
-import { selectLoggedIn, getAuthUserAsync } from "../../store/sessionSlice";
 
-//{ authUser }
 const MainNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const authUser = useSelector(selectLoggedIn);
+  //fetch logIn status from store
+  const isAuthenticated = useSelector(selectLoggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,12 +31,12 @@ const MainNavbar = () => {
     <Navbar color="dark" dark expand="sm">
       <Container>
         <NavbarBrand>
-          <Link to={authUser ? ROUTES.APP : ROUTES.LANDING}>App</Link>
+          <Link to={isAuthenticated ? ROUTES.APP : ROUTES.LANDING}>App</Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            {authUser && (
+            {isAuthenticated && (
               <NavItem>
                 <NavLink>
                   <Link to={ROUTES.ACCOUNT}>Account</Link>
@@ -60,7 +59,7 @@ const MainNavbar = () => {
             </NavItem>
             <NavItem>
               <NavLink>
-                {authUser ? (
+                {isAuthenticated ? (
                   <SignOutButton />
                 ) : (
                   <Link to={ROUTES.SIGN_IN}>Sign In</Link>
@@ -72,10 +71,6 @@ const MainNavbar = () => {
       </Container>
     </Navbar>
   );
-};
-
-MainNavbar.propTypes = {
-  authUser: PropTypes.any.isRequired,
 };
 
 export default MainNavbar;

@@ -6,18 +6,18 @@ import MainRouter from "../../routes";
 
 const App = () => {
   // for testing only. Transfer Session to store.
-  const [authUser, setAuthUser] = useState(null);
-  const firebase = useFirebase();
+  // const [authUser, setAuthUser] = useState(null);
+  // const firebase = useFirebase();
 
-  useEffect(() => {
-    firebase.auth.onAuthStateChanged((authUser) =>
-      authUser ? setAuthUser(authUser) : setAuthUser(null)
-    );
-  }, [firebase.auth]);
+  // useEffect(() => {
+  //   firebase.auth.onAuthStateChanged((authUser) =>
+  //     authUser ? setAuthUser(authUser) : setAuthUser(null)
+  //   );
+  // }, [firebase.auth]);
 
   return (
     <Router>
-      <MainNavbar authUser={authUser} />
+      <MainNavbar />
       <MainRouter />
     </Router>
   );
