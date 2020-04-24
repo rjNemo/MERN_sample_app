@@ -6,6 +6,7 @@ import {
   deleteItemAsync,
   getItemsAsync,
 } from "../../store/itemSlice";
+import { useFirebase } from "../../services/auth";
 
 const useStyles = () => ({
   removeBtn: {
@@ -20,12 +21,17 @@ export default function List() {
   const dispatch = useDispatch();
 
   const styles = useStyles();
-
+  const firebase = useFirebase();
   // UseEffect loads items from the db when component renders.
   // Precising dependencies so it doesn't render infinitely.
   useEffect(() => {
-    dispatch(getItemsAsync());
-  }, [dispatch]);
+    firebase.auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const token = await firebase.auth.currentUser.getIdToken();
+        dispatch(getItemsAsync(token));
+      }
+    });
+  }, [dispatch, firebase.auth]);
 
   return (
     <ListGroup>
