@@ -19,7 +19,6 @@ export const sessionSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    createAuthUser: (state, action) => {},
     getToken: (state, action) => ({
       ...state,
       token: action.payload,
@@ -77,6 +76,17 @@ export const createAuthUserAsync = (email, password, props) => async (
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
+    .then(() => props.history.push(ROUTES.APP))
+    .catch((err) => dispatch(newError(err)));
+};
+
+/**
+ * Sign in with email and password
+ */
+export const signInAsync = (email, password, props) => async (dispatch) => {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
     .then(() => props.history.push(ROUTES.APP))
     .catch((err) => dispatch(newError(err)));
 };

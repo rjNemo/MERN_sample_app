@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Container } from "reactstrap";
-import { useFirebase } from "../../services/auth";
 import { SignUpLink } from "../SignUp";
 import InputField from "../../components/InputField";
-import * as ROUTES from "../../constants/routes";
 import { PasswordForgetLink } from "../PasswordForget";
+import {
+  signInAsync,
+  selectError,
+  createAuthUserWithGoogleAsync,
+} from "../../store/sessionSlice";
 
 const useStyles = () => ({
   root: {
@@ -36,37 +40,18 @@ export default function SignInPage() {
 const SignInFormBase = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
-  const auth = useFirebase();
-
-  const cleanFields = () => {
-    setEmail("");
-    setPassword("");
-    setError(null);
-  };
+  const error = useSelector(selectError);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    auth
-      .signinWithEmailAndPassword(email, password)
-      .then(() => {
-        cleanFields();
-        props.history.push(ROUTES.APP);
-      })
-      .catch((err) => setError(err));
+    dispatch(signInAsync(email, password, props));
   };
 
-  const handleClick = (e) => {
+  const loginWithGoogle = (e) => {
     e.preventDefault();
-    auth
-      .signInWithGoogle()
-      .then(() => {
-        cleanFields();
-        props.history.push(ROUTES.APP);
-      })
-      .catch((err) => setError(err));
+    dispatch(createAuthUserWithGoogleAsync(props));
   };
 
   const isInvalid = email === "" || password === "";
@@ -97,7 +82,12 @@ const SignInFormBase = (props) => {
         >
           Sign In
         </Button>
-        <Button color="light" style={styles.button} block onClick={handleClick}>
+        <Button
+          color="light"
+          style={styles.button}
+          block
+          onClick={loginWithGoogle}
+        >
           Sign In with Google
         </Button>
         {error && <p>{error.message}</p>}

@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Container } from "reactstrap";
 import * as ROUTES from "../../constants/routes";
 import InputField from "../../components/InputField";
-import { createAuthUserAsync, selectError } from "../../store/sessionSlice";
+import {
+  createAuthUserAsync,
+  createAuthUserWithGoogleAsync,
+  selectError,
+} from "../../store/sessionSlice";
 
 const useStyles = () => ({
   root: {
@@ -49,7 +53,7 @@ const SignUpFormBase = (props) => {
 
   const loginWithGoogle = (e) => {
     e.preventDefault();
-    dispatch(createAuthUserAsync(props));
+    dispatch(createAuthUserWithGoogleAsync(props));
   };
 
   const isInvalid =
