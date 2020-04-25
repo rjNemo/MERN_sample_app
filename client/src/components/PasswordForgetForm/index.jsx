@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup } from "reactstrap";
-import { useFirebase } from "../../services/auth";
 import InputField from "../../components/InputField";
+import { resetPasswordAsync, selectError } from "../../store/sessionSlice";
 
 const useStyles = () => ({
   button: {
@@ -12,19 +13,14 @@ const useStyles = () => ({
 
 const PasswordForgetForm = () => {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
+  const error = useSelector(selectError);
 
-  const auth = useFirebase();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .resetPassword(email)
-      .then(() => {
-        setEmail("");
-        setError(null);
-      })
-      .catch((err) => setError(err));
+    setEmail("");
+    dispatch(resetPasswordAsync(email));
   };
 
   const isInvalid = email === "";

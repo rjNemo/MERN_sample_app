@@ -87,8 +87,31 @@ export const signInAsync = (email, password, props) => async (dispatch) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => props.history.push(ROUTES.APP))
+    .then(() => {
+      dispatch(logIn());
+      props.history.push(ROUTES.APP);
+    })
     .catch((err) => dispatch(newError(err)));
+};
+
+/**
+ * Sign out
+ */
+export const signOutAsync = () => async (dispatch) => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      dispatch(logOut());
+    });
+};
+
+export const resetPasswordAsync = (email) => async (dispatch) => {
+  firebase.auth().sendPasswordResetEmail(email);
+};
+
+export const updatePasswordAsync = (password) => async (dispatch) => {
+  firebase.auth().currentUser.updatePassword(password);
 };
 
 /**

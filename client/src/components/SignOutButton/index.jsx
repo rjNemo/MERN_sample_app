@@ -1,9 +1,11 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Button } from "reactstrap";
-import { useFirebase } from "../../services/auth";
+import { signOutAsync } from "../../store/sessionSlice";
 
 const SignOutButton = () => {
-  const auth = useFirebase();
-  return <Button onClick={auth.signOut}>Sign Out</Button>;
+  const dispatch = useDispatch();
+  return <Button onClick={() => dispatch(signOutAsync())}>Sign Out</Button>;
 };
-export default SignOutButton;
+export default withRouter(SignOutButton);

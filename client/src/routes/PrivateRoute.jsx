@@ -15,7 +15,7 @@ const PrivateRoute = ({
 
   useEffect(() => {
     if (!condition(authUser)) {
-      history.push(ROUTES.SIGN_IN);
+      setTimeout(() => history.push(ROUTES.SIGN_IN), 0);
     }
   }, [condition, history, authUser]);
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup } from "reactstrap";
-import { useFirebase } from "../../services/auth";
 import InputField from "../InputField";
+import { updatePasswordAsync, selectError } from "../../store/sessionSlice";
 
 const useStyles = () => ({
   root: {
@@ -17,19 +18,16 @@ const useStyles = () => ({
 const PasswordChangeForm = () => {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-  const [error, setError] = useState(null);
 
-  const auth = useFirebase();
+  const error = useSelector(selectError);
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .updatePassword(password1)
-      .then(() => {
-        setPassword1("");
-        setPassword2("");
-      })
-      .catch((err) => setError(err));
+    setPassword1("");
+    setPassword2("");
+    dispatch(updatePasswordAsync(password1));
   };
 
   const isInvalid = password1 === password2 || password1 === "";
