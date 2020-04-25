@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Modal,
@@ -11,6 +11,7 @@ import {
   Input,
 } from "reactstrap";
 import { addItemAsync } from "../../store/itemSlice";
+import { selectToken } from "../../store/sessionSlice";
 
 const useStyles = () => ({
   button: {
@@ -22,12 +23,13 @@ const useStyles = () => ({
 export default function ItemModal() {
   const [modal, setModal] = useState(false);
   const [name, setName] = useState("");
+  const token = useSelector(selectToken);
   const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addItemAsync(name));
+    dispatch(addItemAsync(name, token));
     toggle();
   };
   const handleChange = (e) => setName(e.target.value);

@@ -55,10 +55,19 @@ export const getAuthUserAsync = () => async (dispatch) => {
   });
 };
 
+/**
+ * Use auth provider to get jwt token to access backend
+ */
+export const getTokenAsync = () => async (dispatch) => {
+  const token = await firebase.auth().currentUser.getIdToken();
+  dispatch(getToken(token));
+};
+
 export const { getAuthUser, getToken, logIn, logOut } = sessionSlice.actions;
 
 // selectors
 export const selectAuthUser = (state) => state.session;
 export const selectLoggedIn = (state) => state.session.loggedIn;
+export const selectToken = (state) => state.session.token;
 
 export default sessionSlice.reducer;

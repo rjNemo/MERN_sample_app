@@ -11,7 +11,11 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import { selectLoggedIn, getAuthUserAsync } from "../../store/sessionSlice";
+import {
+  selectLoggedIn,
+  getAuthUserAsync,
+  getTokenAsync,
+} from "../../store/sessionSlice";
 import SignOutButton from "../SignOutButton";
 import * as ROUTES from "../../constants/routes";
 
@@ -25,7 +29,8 @@ const MainNavbar = () => {
 
   useEffect(() => {
     dispatch(getAuthUserAsync());
-  }, [dispatch]);
+    if (isAuthenticated) dispatch(getTokenAsync());
+  }, [dispatch, isAuthenticated]);
 
   return (
     <Navbar color="dark" dark expand="sm">

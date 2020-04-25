@@ -6,7 +6,7 @@ import {
   deleteItemAsync,
   getItemsAsync,
 } from "../../store/itemSlice";
-import { useFirebase } from "../../services/auth";
+import { selectToken } from "../../store/sessionSlice";
 
 const useStyles = () => ({
   removeBtn: {
@@ -17,44 +17,42 @@ const useStyles = () => ({
 export default function List() {
   // useSelector links the component to the store data.
   const items = useSelector(selectItems);
+  const token = useSelector(selectToken);
   // useDispatch allows to emit actions.
   const dispatch = useDispatch();
 
   const styles = useStyles();
-  const firebase = useFirebase();
+
   // UseEffect loads items from the db when component renders.
   // Precising dependencies so it doesn't render infinitely.
   useEffect(() => {
-    firebase.auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const token = await firebase.auth.currentUser.getIdToken();
-        dispatch(getItemsAsync(token));
+    if (token) dispatch(getItemsAsync(token));
 
-        // push to authslice ...
-        //import axios from "axios";
-        // import * as URL from "../../constants/urls";
-        // const u = await firebase.auth.currentUser;
-        // console.log(u);
-        // await axios.post(
-        //   URL.USERS,
-        //   {
-        //     username: u.displayName,
-        //     email: u.email,
-        //     roles: {
-        //       ADMIN: true,
-        //     },
-        //     photoUrl: u.photoURL,
-        //     phoneNumber: u.phoneNumber,
-        //   },
-        //   {
-        //     headers: {
-        //       authorization: `Bearer ${token}`,
-        //     },
-        //   }
-        // );
-      }
-    });
-  }, [dispatch, firebase.auth]);
+    // push to authslice ...
+    //import axios from "axios";
+    // import * as URL from "../../constants/urls";
+    // const u = await firebase.auth.currentUser;
+    // console.log(u);
+    // await axios.post(
+    //   URL.USERS,
+    //   {
+    //     username: u.displayName,
+    //     email: u.email,
+    //     roles: {
+    //       ADMIN: true,
+    //     },
+    //     photoUrl: u.photoURL,
+    //     phoneNumber: u.phoneNumber,
+    //   },
+    //   {
+    //     headers: {
+    //       authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // );
+    // }
+    // });
+  }, [dispatch, token]);
 
   return (
     <ListGroup>
@@ -64,7 +62,7 @@ export default function List() {
             style={styles.removeBtn}
             color="danger"
             size="small"
-            onClick={() => dispatch(deleteItemAsync(_id))}
+            onClick={() => dispatch(deleteItemAsync(_id, token))}
           >
             &times;
           </Button>
