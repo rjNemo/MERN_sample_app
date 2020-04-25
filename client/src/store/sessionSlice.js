@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { firebase } from "../services/auth";
+import * as ROUTES from "../constants/routes";
 
 export const sessionSlice = createSlice({
   name: "session",
@@ -18,7 +19,7 @@ export const sessionSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    addAuthUser: (state, action) => {},
+    createAuthUser: (state, action) => {},
     getToken: (state, action) => ({
       ...state,
       token: action.payload,
@@ -30,6 +31,10 @@ export const sessionSlice = createSlice({
     logOut: (state) => ({
       ...state,
       loggedIn: false,
+    }),
+    newError: (state, action) => ({
+      ...state,
+      error: action.payload,
     }),
   },
 });
@@ -63,11 +68,47 @@ export const getTokenAsync = () => async (dispatch) => {
   dispatch(getToken(token));
 };
 
-export const { getAuthUser, getToken, logIn, logOut } = sessionSlice.actions;
+/**
+ * Create auth user with email and password
+ */
+export const createAuthUserAsync = (email, password, props) => async (
+  dispatch
+) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(() => props.history.push(ROUTES.APP))
+    .catch((err) => dispatch(newError(err)));
+};
+
+/**
+ * Create auth user with google
+ */
+export const createAuthUserWithGoogleAsync = (props) => async (dispatch) => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase
+    .auth()
+    // signInWithRedirect(this.provider);
+    .signInWithPopup(provider)
+    .then(() => props.history.push(ROUTES.APP))
+    .catch((err) => dispatch(newError(err)));
+};
+
+// actions
+export const {
+  getAuthUser,
+  createAuthUser,
+  getToken,
+  logIn,
+  logOut,
+  newError,
+} = sessionSlice.actions;
 
 // selectors
 export const selectAuthUser = (state) => state.session;
 export const selectLoggedIn = (state) => state.session.loggedIn;
 export const selectToken = (state) => state.session.token;
+export const selectError = (state) => state.session.error;
 
+// reducer
 export default sessionSlice.reducer;

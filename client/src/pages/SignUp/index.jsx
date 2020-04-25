@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, FormGroup, Container } from "reactstrap";
 import * as ROUTES from "../../constants/routes";
-import { useFirebase } from "../../services/auth";
 import InputField from "../../components/InputField";
+import { createAuthUserAsync, selectError } from "../../store/sessionSlice";
 
 const useStyles = () => ({
   root: {
@@ -37,38 +38,18 @@ const SignUpFormBase = (props) => {
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-  const [error, setError] = useState(null);
+  const error = useSelector(selectError);
 
-  const auth = useFirebase();
-
-  const cleanFields = () => {
-    setUserName("");
-    setEmail("");
-    setPassword1("");
-    setPassword2("");
-    setError(null);
-  };
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password1)
-      .then(() => {
-        cleanFields();
-        props.history.push(ROUTES.APP);
-      })
-      .catch((err) => setError(err));
+    dispatch(createAuthUserAsync(email, password1, props));
   };
 
-  const handleClick = (e) => {
+  const loginWithGoogle = (e) => {
     e.preventDefault();
-    auth
-      .signInWithGoogle()
-      .then(() => {
-        cleanFields();
-        props.history.push(ROUTES.APP);
-      })
-      .catch((err) => setError(err));
+    dispatch(createAuthUserAsync(props));
   };
 
   const isInvalid =
@@ -110,7 +91,12 @@ const SignUpFormBase = (props) => {
         >
           Sign Up
         </Button>
-        <Button color="light" style={styles.button} block onClick={handleClick}>
+        <Button
+          color="light"
+          style={styles.button}
+          block
+          onClick={loginWithGoogle}
+        >
           Sign Up with Google
         </Button>
         {error && <p>{error.message}</p>}

@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter, Route } from "react-router-dom";
-import { useFirebase } from "../services/auth";
 import * as ROUTES from "../constants/routes";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectAuthUser,
-  getAuthUserAsync,
-  selectLoggedIn,
-} from "../store/sessionSlice";
+import { useSelector } from "react-redux";
+import { selectAuthUser } from "../store/sessionSlice";
 
 const PrivateRoute = ({
   component: Component,
@@ -16,26 +11,13 @@ const PrivateRoute = ({
   history,
   ...rest
 }) => {
-  // const [authUser, setAuthUser] = useState(null);
-  // const firebase = useFirebase();
   const authUser = useSelector(selectAuthUser);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    // dispatch(getAuthUserAsync())
-
     if (!condition(authUser)) {
       history.push(ROUTES.SIGN_IN);
     }
-    // else {
-    //   setAuthUser(authUser);
-    // }
-  }, [
-    // firebase.auth,
-    condition,
-    history,
-  ]);
+  }, [condition, history, authUser]);
 
   const render = (props) => <Component {...props} />;
   return condition(authUser) ? (
