@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.5.0",
     "helmet": "^3.23.3",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^5.12.2"
   },
   "devDependencies": {
